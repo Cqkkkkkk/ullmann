@@ -48,22 +48,6 @@ class Ullmann:
                     trans_matrix[vertex1.vid][vertex2.vid] = 1
         return trans_matrix
 
-    # @staticmethod
-    # def read_file(path):
-    #     graphs = []
-    #     with open(path) as f_in:
-    #         tmp = Graph()
-    #         for i in f_in.readlines():
-    #             line = i.strip().split()
-    #             if 't' in line:
-    #                 if not len(tmp.vertices) == 0:
-    #                     graphs.append(tmp)
-    #                 tmp = Graph()
-    #             elif 'v' in line:
-    #                 tmp.add_vertex(*line[1:])
-    #             elif 'e' in line:
-    #                 tmp.add_edges(*line[1:])
-    #     return graphs
 
     @staticmethod
     def read_file(path):
