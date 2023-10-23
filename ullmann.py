@@ -1,13 +1,15 @@
 import pdb
 import numpy as np
-from graph import Graph
+
 
 
 class Ullmann:
     def __init__(self, graph1, graph2):
         self.graph1 = graph1
         self.graph2 = graph2
-
+        self.hash_g1 = hash(graph1)
+        self.hash_g2 = hash(graph2)
+        
     @staticmethod
     def check_mat(graph1, graph2, mat):
         matrix1 = graph1.adjacency_matrix()
@@ -48,26 +50,6 @@ class Ullmann:
                     trans_matrix[vertex1.vid][vertex2.vid] = 1
         return trans_matrix
 
-
-    @staticmethod
-    def read_file(path):
-        graphs = []
-
-        with open(path) as file:
-            current_graph = Graph()
-            for line in file:
-                tokens = line.strip().split()
-                if len(tokens) > 0: 
-                    if tokens[0] == 't':
-                        if current_graph.vertices:
-                            graphs.append(current_graph)
-                            current_graph = Graph()
-                    elif tokens[0] == 'v':
-                        current_graph.add_vertex(*tokens[1:])
-                    elif tokens[0] == 'e':
-                        current_graph.add_edges(*tokens[1:])
-        return graphs
-
     def search(self):
         num_vertices1 = len(self.graph1.vertices)
         num_vertices2 = len(self.graph2.vertices)
@@ -76,7 +58,7 @@ class Ullmann:
         trans_matrix = self.refinement(self.graph1, self.graph2, trans_matrix)
 
         if self.matrix_failed(trans_matrix):
-            return
+            return -1, -1, -1, None
 
         depth_matrices = [trans_matrix.copy() for _ in range(num_vertices1)]
         columns_used = [0 for _ in range(num_vertices2 + 1)]
@@ -113,15 +95,17 @@ class Ullmann:
                     if self.check_mat(self.graph1, self.graph2, trans_matrix.copy()):
                         matches_count += 1
                         print(trans_matrix)
+                        self.trans_matrix = trans_matrix
                     can_move_deeper = False
                 else:
                     depth_matrices[depth] = trans_matrix.copy()
                     column_id = depth_markers[depth]
 
             if not can_move_deeper:
-                if depth == 0:
-                    print(f'total: {matches_count}')
-                    return
+                if depth == 0 and matches_count != 0:
+                    print('-'*50)
+                    print(f'Total: {matches_count} matches for {self.hash_g1} and {self.hash_g2}')
+                    return self.hash_g1, self.hash_g2, matches_count, self.trans_matrix
 
                 depth_markers[depth] = -1
                 depth -= 1

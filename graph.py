@@ -26,8 +26,6 @@ class Edge:
 
 
 
-
-
 class Graph(object):
 
     def __init__(self):
@@ -37,13 +35,13 @@ class Graph(object):
         self._adjacency_matrix = None
 
     def add_vertex(self, vid, label):
-        vertex = Vertex(int(vid), label)
+        vertex = Vertex(vid, label)
         self.vertices.append(vertex)
         return vertex
 
     def add_edges(self, start_vid, end_vid, label):
-        start_vertex = self.vertices[int(start_vid)]
-        end_vertex = self.vertices[int(end_vid)]
+        start_vertex = self.vertices[start_vid]
+        end_vertex = self.vertices[end_vid]
         
         edge = Edge(start_vertex, end_vertex, label)
         self.edges.append(edge)
