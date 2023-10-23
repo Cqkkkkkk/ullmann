@@ -2,9 +2,9 @@ from ullmann import Ullmann
 import numpy as np
 
 class Vertex:
-    def __init__(self, vid, vlb):
+    def __init__(self, vid, label):
         self.vid = vid      # Vertex ID
-        self.vlb = vlb      # Vertex label
+        self.label = label      # Vertex label
         self.neighbors = []
 
 class Graph:
@@ -12,8 +12,8 @@ class Graph:
         self.vertices = []
         self.edges = []
 
-    def add_vertex(self, vid, vlb):
-        vertex = Vertex(vid, vlb)
+    def add_vertex(self, vid, label):
+        vertex = Vertex(vid, label)
         self.vertices.append(vertex)
         return vertex
 

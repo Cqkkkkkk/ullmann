@@ -10,8 +10,8 @@ class Ullmann:
 
     @staticmethod
     def check_mat(graph1, graph2, mat):
-        matrix1 = graph1.get_matrix()
-        matrix2 = graph2.get_matrix()
+        matrix1 = graph1.adjacency_matrix()
+        matrix2 = graph2.adjacency_matrix()
         intermediate_matrix = mat.dot(mat.dot(matrix2).T)
 
         for i, j in np.ndindex(matrix1.shape):
@@ -21,8 +21,8 @@ class Ullmann:
 
     @staticmethod
     def refinement(graph1, graph2, mat):
-        matrix1 = graph1.get_matrix()
-        matrix2 = graph2.get_matrix()
+        matrix1 = graph1.adjacency_matrix()
+        matrix2 = graph2.adjacency_matrix()
 
         for i, j in np.ndindex(mat.shape):
             if mat[i, j]:
@@ -44,7 +44,7 @@ class Ullmann:
         trans_matrix = np.zeros((len(graph1.vertices), len(graph2.vertices)))
         for vertex1 in graph1.vertices:
             for vertex2 in graph2.vertices:
-                if vertex1.vlb == vertex2.vlb and len(vertex1.neighbors) <= len(vertex2.neighbors):
+                if vertex1.label == vertex2.label and len(vertex1.neighbors) <= len(vertex2.neighbors):
                     trans_matrix[vertex1.vid][vertex2.vid] = 1
         return trans_matrix
 
