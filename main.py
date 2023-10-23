@@ -1,5 +1,4 @@
-from ullmann import *
-import sys
+from ullmann import Ullmann
 from utils import read_file
 
 
@@ -12,9 +11,8 @@ if __name__ == '__main__':
     print('Num queries:', len(queries))
 
 
-
-    for i in queries:
-        for j in graphs:
-            solver = Ullmann(i, j)
+    for q in queries:
+        for g in graphs:
+            solver = Ullmann(q, g)
             solver.search()
         
