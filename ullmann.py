@@ -4,12 +4,15 @@ import numpy as np
 
 
 class Ullmann:
-    def __init__(self, graph1, graph2):
+    # 初始化函数，设置两个待比较的图。
+    def __init__(self, graph1, graph2, verbose=True):
         self.graph1 = graph1
         self.graph2 = graph2
         self.hash_g1 = hash(graph1)
         self.hash_g2 = hash(graph2)
+        self.verbose = verbose
         
+    # 检查两个图是否同构的核心函数。
     @staticmethod
     def check_mat(graph1, graph2, mat):
         matrix1 = graph1.adjacency_matrix()
@@ -21,6 +24,7 @@ class Ullmann:
                 return False
         return True
 
+    # 进一步修正匹配矩阵，使其更加准确。
     @staticmethod
     def refinement(graph1, graph2, mat):
         matrix1 = graph1.adjacency_matrix()
@@ -35,11 +39,13 @@ class Ullmann:
                 if not mat[i][j]:
                     break
         return mat
-
+    
+    # 检查当前的匹配矩阵是否失败（即不可能得到一个有效的匹配）。
     @staticmethod
     def matrix_failed(mat):
         return any(sum(row) == 0 for row in mat)
 
+    # 获取图1和图2之间的初步匹配矩阵。
     @staticmethod
     def get_transformation_matrix(graph1, graph2):
 
@@ -50,6 +56,7 @@ class Ullmann:
                     trans_matrix[vertex1.vid][vertex2.vid] = 1
         return trans_matrix
 
+    # 主要的搜索函数，使用深度优先搜索（DFS）和回溯技术来找到所有可能的匹配。如果找到了一个匹配，它会打印匹配矩阵。
     def search(self):
         num_vertices1 = len(self.graph1.vertices)
         num_vertices2 = len(self.graph2.vertices)
@@ -94,7 +101,8 @@ class Ullmann:
                 if depth == num_vertices1:
                     if self.check_mat(self.graph1, self.graph2, trans_matrix.copy()):
                         matches_count += 1
-                        print(trans_matrix)
+                        if self.verbose:
+                            print(trans_matrix)
                         self.trans_matrix = trans_matrix
                     can_move_deeper = False
                 else:
@@ -103,8 +111,9 @@ class Ullmann:
 
             if not can_move_deeper:
                 if depth == 0 and matches_count != 0:
-                    print('-'*50)
-                    print(f'Total: {matches_count} matches for {self.hash_g1} and {self.hash_g2}')
+                    if self.verbose:
+                        print('-'*50)
+                        print(f'Total: {matches_count} matches for {self.hash_g1} and {self.hash_g2}')
                     return self.hash_g1, self.hash_g2, matches_count, self.trans_matrix
 
                 depth_markers[depth] = -1

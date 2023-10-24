@@ -16,3 +16,4 @@ if __name__ == '__main__':
             solver = Ullmann(q, g)
             solver.search()
         
+        
