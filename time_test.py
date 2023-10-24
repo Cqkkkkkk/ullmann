@@ -3,11 +3,11 @@ import numpy as np
 from ullmann import Ullmann
 from utils import read_file
 
-
 if __name__ == '__main__':
 
+    test_name = 'Q4'
     graphs = read_file('./graphDB/mygraphdb.data')
-    queries = read_file('./graphDB/Q24.my')
+    queries = read_file('./graphDB/{}.my'.format(test_name))
 
     repeat = 5
     num_graphs_used = 300
