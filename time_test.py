@@ -29,8 +29,9 @@ if __name__ == '__main__':
 
     time_array = []
 
-    for _ in range(repeat):
+    for i in range(repeat):
         if args.shuffle:
+            random.seed(42 + i * 100)
             random.shuffle(graphs)
             random.shuffle(queries)
         cur_graphs = graphs[:num_graphs_used]
