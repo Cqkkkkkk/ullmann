@@ -44,5 +44,5 @@ ax1.legend(legends)
 ax2.legend(legends)
 
 plt.tight_layout()
-plt.savefig('memory_analysis.png', dpi=400)
+plt.savefig('visualize/memory_analysis.png', dpi=400)
 

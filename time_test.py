@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     for i in range(repeat):
         if args.shuffle:
-            random.seed(42 + i * 100)
+            random.seed(42 + i * 12484)
             random.shuffle(graphs)
             random.shuffle(queries)
         cur_graphs = graphs[:num_graphs_used]
