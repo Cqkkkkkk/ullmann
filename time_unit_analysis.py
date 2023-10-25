@@ -30,7 +30,7 @@ for name in os.listdir('./output'):
     legends.append(file_path_code)
     mean_time_unit, graph_sizes = load_time_unit_result(file_path=file_path)
     
-    plt.scatter(graph_sizes, mean_time_unit, alpha=0.6)
+    plt.scatter(graph_sizes, mean_time_unit, alpha=0.5)
 
 plt.legend(legends)
 plt.tight_layout()

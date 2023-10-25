@@ -7,10 +7,9 @@ plt.rcParams['font.family'] = 'Times New Roman'
 
 
 def load_memory_result(file_path):
-    data = np.load(file_path)   # [repeats, cur_memory, peak_memory]
-    data = data.mean(axis=0)    # [mean_cur_memory, mean_peak_memory]
+    data = np.load(file_path)   # [repeats, trials(graphsxquerys), memory_type]
+    data = data.mean(axis=0)    # [trials, mean_memory_type]
     data /= 1024                # To MB
-
     mean_cur_memory = data[:, 0]
     mean_peak_memory = data[:, 1]
 
